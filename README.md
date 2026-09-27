@@ -1,7 +1,7 @@
 # AI Electricity Bill Anomaly Detector
 
 ### Anomaly Detection Using Machine Learning
-**SWYNEX Technologies â€“ Internship Tasks 1 & 2**
+**SWYNEX Technologies “ Internship Tasks 1 & 2**
 
 ---
 
@@ -11,8 +11,8 @@ The AI Electricity Bill Anomaly Detector is an Artificial Intelligence and Machi
 
 The project was developed in two stages:
 
-- **Task 1“ AI Problem Design:** Defined the real-world problem, AI use case, proposed solution, data requirements, constraints, and evaluation approach.
-- **Task 2 â€“ Model or API Integration:** Converted the concept into a working Machine Learning prototype using Python, Scikit-learn, and Isolation Forest.
+- **Task 1 " AI Problem Design ":** Defined the real-world problem, AI use case, proposed solution, data requirements, constraints, and evaluation approach.
+- **Task 2 " Model or API Integration ":** Converted the concept into a working Machine Learning prototype using Python, Scikit-learn, and Isolation Forest.
 
 The purpose of the project is to identify unusual electricity consumption patterns from historical electricity usage and billing data.
 
@@ -20,7 +20,7 @@ A detected anomaly represents an unusual pattern and does not automatically conf
 
 ---
 
-# TASK 1 “ AI PROBLEM DESIGN
+# TASK 1 " AI PROBLEM DESIGN "
 
 ## 1. Introduction
 
@@ -223,7 +223,7 @@ Task 1 was completed as an AI problem-design concept and explanatory video cover
 
 ---
 
-# TASK 2 “ MODEL OR API INTEGRATION
+# TASK 2 " MODEL OR API INTEGRATION "
 
 ## 16. Task 2 Overview
 
