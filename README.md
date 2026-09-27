@@ -11,7 +11,7 @@ The AI Electricity Bill Anomaly Detector is an Artificial Intelligence and Machi
 
 The project was developed in two stages:
 
-- **Task 1 â€“ AI Problem Design:** Defined the real-world problem, AI use case, proposed solution, data requirements, constraints, and evaluation approach.
+- **Task 1“ AI Problem Design:** Defined the real-world problem, AI use case, proposed solution, data requirements, constraints, and evaluation approach.
 - **Task 2 â€“ Model or API Integration:** Converted the concept into a working Machine Learning prototype using Python, Scikit-learn, and Isolation Forest.
 
 The purpose of the project is to identify unusual electricity consumption patterns from historical electricity usage and billing data.
@@ -20,7 +20,7 @@ A detected anomaly represents an unusual pattern and does not automatically conf
 
 ---
 
-# TASK 1 â€“ AI PROBLEM DESIGN
+# TASK 1 “ AI PROBLEM DESIGN
 
 ## 1. Introduction
 
@@ -223,7 +223,7 @@ Task 1 was completed as an AI problem-design concept and explanatory video cover
 
 ---
 
-# TASK 2 â€“ MODEL OR API INTEGRATION
+# TASK 2 “ MODEL OR API INTEGRATION
 
 ## 16. Task 2 Overview
 
@@ -382,25 +382,25 @@ SWYNEX-Model-or-API-Integration/
 
 ## 26. How to Run
 
-### Step 1 â€“ Clone
+### Step 1 “ Clone
 
 ```bash
 git clone https://github.com/Vikasbmalli/SWYNEX-Model-or-API-Integration.git
 ```
 
-### Step 2 â€“ Open the project
+### Step 2 “ Open the project
 
 ```bash
 cd SWYNEX-Model-or-API-Integration
 ```
 
-### Step 3 â€“ Install dependencies
+### Step 3 " Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 4 â€“ Run
+### Step 4 “ Run
 
 ```bash
 python anomaly_detector.py
@@ -440,7 +440,7 @@ The Task 2 prototype demonstrates:
 
 ---
 
-# TASK 1 â†’ TASK 2 PROGRESSION
+# TASK 1 ’ TASK 2 PROGRESSION
 
 ```text
              TASK 1
