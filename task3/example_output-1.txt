@@ -1,0 +1,6 @@
+4 anomalies in 36 months
+
+2023-06  568 kWh  $91.06  [High] Usage +87% vs typical - check appliances, AC/heater, leaks.
+2023-08  275 kWh  $83.70  [High] Rate per kWh is +90% vs typical - possible billing error.
+2024-09  20 kWh  $3.14  [High] Usage -94% vs typical - check meter fault or vacancy.
+2024-12  541 kWh  $85.42  [High] Usage +78% vs typical - check appliances, AC/heater, leaks.

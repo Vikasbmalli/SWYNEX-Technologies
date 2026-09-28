@@ -1,0 +1,29 @@
+============================================================
+PART 1: Detection quality (20 synthetic datasets, 36 months, 4 true anomalies)
+============================================================
+sensitivity   precision    recall        F1
+0.05               1.00      0.50      0.67
+0.1                0.99      0.99      0.99
+0.15               0.67      1.00      0.80
+0.2                0.57      1.00      0.73
+
+By anomaly type (sensitivity 0.10, 20 datasets):
+  spike       caught 20/20
+  drop        caught 19/20
+  rate error  caught 20/20
+
+============================================================
+PART 2: Failure cases (each should give a clear message, not a crash)
+============================================================
+[OK] Missing file: File not found: does_not_exist.csv
+[OK] Empty file: The CSV file is empty.
+[OK] Missing column: Missing required column(s): bill_amount. Expected: month, usage_kwh, bill_amount.
+[OK] Too few rows: Need at least 8 valid monthly bills, got 4.
+[OK] Negative usage: Negative usage or bill amounts found. Please check your data.
+[OK] Bad sensitivity: Sensitivity must be between 0.01 and 0.30.
+[OK] Text in numbers: Need at least 8 valid monthly bills, got 0.
+[OK] Messy rows (recoverable): Dropped 2 row(s) with missing or non-numeric values.
+
+Known limitation: a slow drift (usage rising 2% every month) is not detected as a
+trend, because no single month looks unusual to IsolationForest.
+  It only flagged 2 extreme end-of-range months, and never reports the upward trend.
