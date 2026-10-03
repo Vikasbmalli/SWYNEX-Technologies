@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voltguard â€” Electricity Bill Anomaly Detector</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><text y=%2220%22 font-size=%2220%22>âš¡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="grid-glow" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">âš¡</span>
+    <span class="brand-name">Voltguard</span>
+  </div>
+  <nav class="topbar-actions">
+    <button id="historyBtn" class="ghost-btn">Run history</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-copy">
+    <p class="hero-kicker">Anomaly detection for household &amp; business power bills</p>
+    <h1>Catch the spike<br>before it costs you.</h1>
+    <p class="hero-sub">Voltguard reads your monthly usage and bill amounts, learns what
+      "normal" looks like for your meter, and lights up the months that don't fit â€”
+      a leak, a stuck appliance, or a billing mistake.</p>
+    <div class="hero-actions">
+      <button id="sampleBtn" class="primary-btn">
+        <span>Try it with sample data</span>
+      </button>
+      <label class="upload-btn">
+        <input type="file" id="fileInput" accept=".csv" hidden>
+        <span>Upload your CSV</span>
+      </label>
+    </div>
+    <p class="hero-hint">Expected columns: <code>month, usage_kwh, bill_amount</code></p>
+  </div>
+
+  <div class="hero-dial" aria-hidden="true">
+    <svg viewBox="0 0 240 240" class="dial-svg">
+      <circle cx="120" cy="120" r="98" class="dial-track"></circle>
+      <circle cx="120" cy="120" r="98" class="dial-fill" id="dialFill"></circle>
+      <text x="120" y="112" text-anchor="middle" class="dial-value" id="dialValue">--</text>
+      <text x="120" y="138" text-anchor="middle" class="dial-label">months clean</text>
+    </svg>
+    <div class="dial-bolt">âš¡</div>
+  </div>
+</section>
+
+<main class="dashboard" id="dashboard" hidden>
+
+  <div class="controls-bar">
+    <div class="sensitivity-control">
+      <label for="sensitivity">Sensitivity</label>
+      <input type="range" id="sensitivity" min="0.01" max="0.30" step="0.01" value="0.10">
+      <span id="sensitivityValue" class="mono">0.10</span>
+    </div>
+    <p class="controls-hint" id="fileNameLabel">sample_bills.csv</p>
+  </div>
+
+  <div class="stat-cards" id="statCards">
+    <div class="stat-card">
+      <p class="stat-label">Months analyzed</p>
+      <p class="stat-value mono" id="statMonths">0</p>
+    </div>
+    <div class="stat-card stat-card--warn">
+      <p class="stat-label">Unusual months</p>
+      <p class="stat-value mono" id="statAnomalies">0</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Average usage</p>
+      <p class="stat-value mono" id="statAvg">0 <span class="unit">kWh</span></p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Highest bill</p>
+      <p class="stat-value mono" id="statMax">$0</p>
+    </div>
+  </div>
+
+  <div class="panel chart-panel">
+    <h2>Usage over time</h2>
+    <canvas id="usageChart" height="110"></canvas>
+  </div>
+
+  <div class="panel">
+    <h2>Flagged months</h2>
+    <div id="flaggedList" class="flagged-list"></div>
+    <p id="noAnomalies" class="empty-state" hidden>No unusual months at this sensitivity. Your meter is behaving.</p>
+  </div>
+
+</main>
+
+<section class="how-it-works">
+  <h2>How Voltguard decides what's "unusual"</h2>
+  <div class="how-grid">
+    <div class="how-card">
+      <span class="how-index mono">01</span>
+      <h3>Learns your baseline</h3>
+      <p>An Isolation Forest model looks at usage and cost-per-kWh together, and
+        learns the shape of a normal month for this specific meter.</p>
+    </div>
+    <div class="how-card">
+      <span class="how-index mono">02</span>
+      <h3>Flags the outliers</h3>
+      <p>Months that sit far from that baseline â€” a spike, a drop, or a rate
+        that doesn't match usage â€” get flagged with a severity and a reason.</p>
+    </div>
+    <div class="how-card">
+      <span class="how-index mono">03</span>
+      <h3>Explains itself</h3>
+      <p>Every flag comes with a plain-language reason, so you know whether to
+        check a leak, a meter, or your bill â€” not just that "something's off."</p>
+    </div>
+  </div>
+  <div class="limitations">
+    <h3>Known limitations</h3>
+    <ul>
+      <li>Needs at least 8 months of data to establish a baseline.</li>
+      <li>A slow, gradual rise in usage won't be flagged â€” only sudden changes are.</li>
+      <li>Trained fresh on whatever data you give it; it doesn't compare across households.</li>
+      <li>This is a decision-support tool, not a billing dispute or safety authority â€” always verify with your utility provider before acting.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="modal-backdrop" id="errorModal" hidden>
+  <div class="modal">
+    <button class="modal-close" id="errorClose">&times;</button>
+    <p class="modal-icon">âš </p>
+    <h3>Couldn't analyze that file</h3>
+    <p id="errorMessage" class="modal-message"></p>
+    <button class="modal-bottom-close ghost-btn" id="errorCloseBottom">Close</button>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="historyModal" hidden>
+  <div class="modal modal--wide">
+    <button class="modal-close" id="historyClose">&times;</button>
+    <h3>Recent runs</h3>
+    <p class="modal-sub" id="historySummary"></p>
+    <div id="historyList" class="history-list"></div>
+    <button class="modal-bottom-close ghost-btn" id="historyCloseBottom">Close</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
